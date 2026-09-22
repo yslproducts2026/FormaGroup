@@ -1,0 +1,66 @@
+{
+  "basicInfo": {
+    "model": "sku",
+    "compliance": "compliance",
+    "performanceStandard": "performanceStandard",
+    "electricityStandard": "electricityStandard",
+    "chemicalStandard": "chemicalStandard"
+  },
+  "dimensions": {
+    "standWidth": "standWidth",
+    "standHeight": "standHeight",
+    "standDepth": "standDepth",
+    "openWidth": "openWidth",
+    "openHeight": "openHeight",
+    "openDepth": "openDepth",
+    "seatDepth": "seatDepth",
+    "seatHeight": "seatHeight",
+    "seatWidth": "seatWidth",
+    "loadability40hc": "loadability"
+  },
+  "packing": {
+    "coli1": { "long": "coli1Long", "width": "coli1Width", "height": "coli1Height", "netWeight": "coli1NetWeight", "grossWeight": "coli1GrossWeight" },
+    "coli2": { "long": "coli2Long", "width": "coli2Width", "height": "coli2Height", "netWeight": "coli2NetWeight", "grossWeight": "coli2GrossWeight" },
+    "coli3": { "long": "coli3Long", "width": "coli3Width", "height": "coli3Height", "netWeight": "coli3NetWeight", "grossWeight": "coli3GrossWeight" },
+    "coli4": { "long": "coli4Long", "width": "coli4Width", "height": "coli4Height", "netWeight": "coli4NetWeight", "grossWeight": "coli4GrossWeight" }
+  },
+  "cover": {
+    "fabricLeather": "fabricLeather",
+    "seatFoam": "seatFoam",
+    "backFoam": "backFoam",
+    "armFoam": "armFoam",
+    "headrestFoam": "headrestFoam"
+  },
+  "insideStructure": {
+    "flatSpring": "flatSpring",
+    "toplineSpring": "toplineSpring",
+    "webbing": "webbing",
+    "solidWood": "solidWood",
+    "chipboard": "chipboard",
+    "fiberboard": "fiberboard",
+    "plywood": "plywood",
+    "cardboard": "cardboard",
+    "steelFrame": "steelFrame"
+  },
+  "function": {
+    "separateFixed": "separateFixed",
+    "legType": "legType",
+    "legMaterial": "legMaterial",
+    "legHeight": "legHeight",
+    "manualHeadrestHeight": "manualHeadrestHeight",
+    "manualHeadrestAngle": "manualHeadrestAngle",
+    "footrestSeatBackAdj": "footrestSeatBackAdj",
+    "electronic": "electronic",
+    "manual": "manualControl",
+    "heater": "heater",
+    "massage": "massage",
+    "usbCPort": "usbCPort",
+    "battery": "battery",
+    "charger": "charger",
+    "liftUp": "liftUp"
+  },
+  "packingInfo": {
+    "packingType": "packingType",
+    "boxCount": "boxCount"
+  }
+}

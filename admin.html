@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forma Group - Product Admin</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2C5F7C;--primary-dark:#1A3D52;--accent:#6BA3BE;--danger:#D94D4D;--success:#2E8B57;--warning:#E8A838;--dark:#1a1a1a;--light:#fafafa;--white:#fff;--gray:#888;--gray-light:#e8e8e8;--shadow:0 4px 20px rgba(0,0,0,.08);--radius:12px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f5f7fa;color:#333;line-height:1.6}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Layout */
+.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+.sidebar{background:var(--white);border-right:1px solid var(--gray-light);padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-header{padding:0 24px 24px;border-bottom:1px solid var(--gray-light);margin-bottom:16px}
+.sidebar-header h1{font-size:18px;font-weight:800;color:var(--dark);display:flex;align-items:center;gap:8px}
+.sidebar-header h1 span{color:var(--primary)}
+.sidebar-nav{list-style:none}
+.sidebar-nav li{border-left:3px solid transparent}
+.sidebar-nav li.active{border-left-color:var(--primary);background:rgba(44,95,124,.05)}
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:12px 24px;color:#555;font-size:14px;font-weight:500;transition:all .2s}
+.sidebar-nav a:hover{color:var(--primary);background:rgba(44,95,124,.08);text-decoration:none}
+.sidebar-nav .nav-icon{width:20px;height:20px;flex-shrink:0;opacity:.7}
+.sidebar-nav li.active .nav-icon{opacity:1}
+.sidebar-footer{position:absolute;bottom:0;left:0;right:0;padding:24px;border-top:1px solid var(--gray-light);background:var(--white)}
+.sidebar-footer a{display:flex;align-items:center;gap:8px;color:var(--gray);font-size:13px}
+.sidebar-footer a:hover{color:var(--primary)}
+
+.main{padding:32px;overflow-y:auto}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Header */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+.page-header h2{font-size:24px;font-weight:800;color:var(--dark)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-secondary{background:var(--white);color:var(--dark);border:1px solid var(--gray-light)}
+.btn-secondary:hover{background:var(--light);border-color:var(--gray)}
+.btn-danger{background:var(--danger);color:var(--white)}
+.btn-warning{background:var(--warning);color:var(--white)}
+.btn-sm{padding:6px 12px;font-size:12px}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:16px}
+.stat-icon{width:48px;height:48px;border-radius:12px;background:rgba(44,95,124,.1);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:20px}
+.stat-info h3{font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:4px}
+.stat-info .num{font-size:28px;font-weight:800;color:var(--dark)}
+
+/* Table */
+.table-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--gray-light)}
+th{background:#fafbfc;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.5px;font-size:11px}
+tr:hover{background:#fafbfc}
+.product-thumb{width:50px;height:50px;object-fit:contain;border-radius:6px;background:#fafafa}
+.sku{font-family:monospace;font-size:12px;color:#333;font-weight:600}
+.category-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;background:rgba(44,95,124,.1);color:var(--primary)}
+.status-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.status-active{background:#e8f5e9;color:#2e7d32}
+.status-new{background:#e3f2fd;color:#1565c0}
+.status-bestseller{background:#fff3e0;color:#e65100}
+.status-outofstock{background:#ffebee;color:#c62828}
+.actions{display:flex;gap:8px}
+.action-btn{width:32px;height:32px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;background:transparent;color:var(--gray)}
+.action-btn:hover{background:var(--gray-light);color:var(--dark)}
+.action-btn.delete:hover{background:#fee;color:var(--danger)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;visibility:hidden;transition:all .3s;padding:20px}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal{background:var(--white);border-radius:var(--radius);width:100%;max-width:900px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);transform:scale(.95);transition:transform .3s}
+.modal-overlay.active .modal{transform:scale(1)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--gray-light)}
+.modal-header h3{font-size:16px;font-weight:700}
+.modal-close{width:36px;height:36px;border-radius:8px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray);transition:all .2s}
+.modal-close:hover{background:var(--gray-light);color:var(--dark)}
+.modal-body{padding:24px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:span 2}
+label{font-size:12px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.5px}
+input,select,textarea{padding:10px 12px;border:1px solid var(--gray-light);border-radius:8px;font-size:13px;font-family:inherit;transition:border .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(44,95,124,.15)}
+textarea{min-height:80px;resize:vertical}
+.image-preview{width:100%;height:160px;border:2px dashed var(--gray-light);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background:#fafafa}
+.image-preview img{width:100%;height:100%;object-fit:contain}
+.image-preview.has-image{border-style:solid}
+.image-upload-label{cursor:pointer;color:var(--primary);font-size:13px}
+.modal-footer{display:flex;justify-content:flex-end;gap:12px;padding:20px 24px;border-top:1px solid var(--gray-light);background:#fafbfc;border-radius:0 0 var(--radius) var(--radius)}
+
+/* Tabs in modal */
+.modal-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--gray-light);padding-bottom:4px}
+.modal-tab{padding:8px 16px;border-radius:6px 6px 0 0;cursor:pointer;font-size:13px;font-weight:500;color:var(--gray);background:transparent;border:none;transition:all .2s}
+.modal-tab.active{color:var(--primary);background:rgba(44,95,124,.1);border-bottom:2px solid var(--primary)}
+.modal-tab:hover:not(.active){color:var(--dark);background:var(--light)}
+.modal-tab-panel{display:none}
+.modal-tab-panel.active{display:block}
+
+/* Image Manager */
+.image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.image-item{position:relative;background:var(--white);border:1px solid var(--gray-light);border-radius:8px;overflow:hidden;aspect-ratio:1}
+.image-item img{width:100%;height:100%;object-fit:cover}
+.image-item-info{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:white;font-size:11px}
+.image-item-actions{position:absolute;top:4px;right:4px;display:flex;gap:4px;opacity:0;transition:opacity .2s}
+.image-item:hover .image-item-actions{opacity:1}
+.image-item-actions button{width:28px;height:28px;border-radius:4px;border:none;background:rgba(0,0,0,.6);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.image-item-actions button:hover{background:var(--danger)}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;padding:14px 24px;border-radius:8px;background:var(--dark);color:white;font-size:13px;box-shadow:var(--shadow-lg);z-index:2000;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:none;opacity:1}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.toast.warning{background:var(--warning)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--gray)}
+.empty-state svg{width:64px;height:64px;margin-bottom:16px;opacity:.5}
+
+/* Trade table in modal */
+.trade-table{width:100%;font-size:13px}
+.trade-table td{padding:8px 0;border-bottom:1px solid var(--gray-light)}
+.trade-table td:first-child{color:var(--gray);width:140px;font-weight:500}
+
+/* Media links */
+.media-link{display:inline-block;margin-right:16px;padding:6px 12px;background:var(--light);border-radius:6px;font-size:12px;color:var(--primary)}
+.media-link:hover{background:rgba(44,95,124,.1);text-decoration:none}
+
+/* Badges in modal */
+.modal-badges{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-new{background:#e3f2fd;color:#1565c0}
+.badge-hot{background:#fff3e0;color:#e65100}
+.badge-oos{background:#ffebee;color:#c62828}
+.badge-moq{background:#f3e5f5;color:#7b1fa2}
+
+/* Responsive */
+@media(max-width:1024px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-280px;top:0;bottom:0;z-index:100;transition:left .3s;box-shadow:var(--shadow-lg)}
+  .sidebar.open{left:0}
+  .sidebar-footer{position:relative}
+  .mobile-menu-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;border:1px solid var(--gray-light);background:var(--white);cursor:pointer}
+  .page-header{position:sticky;top:0;background:#f5f7fa;padding:16px 0 16px;margin:0 -32px 24px;padding-left:32px;padding-right:32px;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:span 1}
+}
+@media(max-width:768px){
+  .table-wrap{overflow-x:auto}
+  table{min-width:800px}
+  .main{padding:16px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header"><h1>Forma<span>Group</span> Admin</h1></div>
+    <nav>
+      <ul class="sidebar-nav">
+        <li class="active" data-page="dashboard"><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</a></li>
+        <li data-page="products"><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>Products</a></li>
+        <li data-page="images"><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Images</a></li>
+        <li data-page="generate"><a href="#"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M3 12h18"/><path d="M17 17l-5-5 5-5"/><path d="M7 17l5-5-5-5"/></svg>Generate Pages</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer"><a href="/" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View Website</a></div>
+  </aside>
+  <div class="modal-overlay" id="sidebarOverlay" style="display:none;"></div>
+
+  <main class="main">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" style="display:none;margin-bottom:16px" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+
+    <section class="page active" id="page-dashboard">
+      <div class="page-header"><h2>Dashboard</h2></div>
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="table-wrap"><table><thead><tr><th>Image</th><th>SKU</th><th>Name</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead><tbody id="recentProductsBody"></tbody></table></div>
+    </section>
+
+    <section class="page" id="page-products">
+      <div class="page-header"><h2>Products</h2><button class="btn btn-primary" onclick="openProductModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Product</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Image</th><th>SKU</th><th>Name</th><th>Category</th><th>Status</th><th>Price</th><th>MOQ</th><th>Actions</th></tr></thead><tbody id="productsBody"></tbody></table></div>
+      <div class="empty-state" id="productsEmpty" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg><p>No products yet. Click "Add Product" to start.</p></div>
+    </section>
+
+    <section class="page" id="page-images">
+      <div class="page-header"><h2>Image Manager</h2><label class="btn btn-secondary image-upload-label"><input type="file" id="imageUpload" accept="image/*" multiple style="display:none" onchange="uploadImages(this.files)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Upload Images</label></div>
+      <div class="image-grid" id="imageGrid"></div>
+      <div class="empty-state" id="imagesEmpty" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><p>No images uploaded yet.</p></div>
+    </section>
+
+    <section class="page" id="page-generate">
+      <div class="page-header"><h2>Generate Static Pages</h2></div>
+      <div class="table-wrap" style="max-width:600px"><div style="padding:24px"><p style="color:#555;margin-bottom:20px">Regenerate all category HTML pages from products.json. This will overwrite the existing HTML files with current product data.</p><button class="btn btn-primary" onclick="generatePages()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M3 12h18"/><path d="M17 17l-5-5 5-5"/><path d="M7 17l5-5-5-5"/></svg>Generate Pages</button><span id="generateStatus" style="margin-left:16px;color:var(--gray);font-size:13px"></span></div></div>
+      <div class="table-wrap" style="max-width:600px;margin-top:16px"><div style="padding:24px"><h4 style="margin-bottom:12px">Current Categories</h4><ul id="categoryList" style="list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px"></ul></div></div>
+    </section>
+  </main>
+</div>
+
+<!-- Product Modal -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modalTitle">Add Product</h3><button class="modal-close" onclick="closeProductModal()">&times;</button></div>
+    <div class="modal-body">
+      <form id="productForm">
+        <input type="hidden" id="productSku" name="sku">
+        <input type="hidden" id="productMode" name="mode" value="create">
+        
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-tab="basic">Basic Info</button>
+          <button class="modal-tab" data-tab="specs">Specs</button>
+          <button class="modal-tab" data-tab="trade">Trade Info</button>
+          <button class="modal-tab" data-tab="media">Media</button>
+          <button class="modal-tab" data-tab="advanced">Advanced</button>
+        </div>
+
+        <!-- Basic Info Tab -->
+        <div class="modal-tab-panel active" id="tab-basic">
+          <div class="form-grid">
+            <div class="form-group"><label>Category</label><select id="productCategory" name="category" required><option value="diningChairs">Dining Chairs</option><option value="barStools">Bar Stools</option><option value="relaxingChairs">Relaxing Chairs</option><option value="sofas">Sofas</option><option value="recliners">Recliners</option></select></div>
+            <div class="form-group"><label>Status</label><select id="productStatus" name="status"><option value="active">Active</option><option value="new">New</option><option value="bestseller">Bestseller</option><option value="outofstock">Out of Stock</option></select></div>
+            <div class="form-group"><label>SKU</label><input type="text" id="productSkuInput" name="skuInput" required placeholder="e.g. FG310021"></div>
+            <div class="form-group"><label>Name</label><input type="text" id="productName" name="name" required placeholder="Product display name"></div>
+            <div class="form-group full"><label>Description</label><textarea id="productDesc" name="desc" required placeholder="e.g. Net Wt: 21 kg / 40HC: 195 sets"></textarea></div>
+            <div class="form-group full"><label>Features</label><textarea id="productFeatures" name="features" placeholder="Key selling points, one per line"></textarea></div>
+            <div class="form-group full"><label>Notes (Internal)</label><textarea id="productNotes" name="notes" placeholder="Internal notes, not shown on website"></textarea></div>
+          </div>
+        </div>
+
+        <!-- Specs Tab -->
+        <div class="modal-tab-panel" id="tab-specs">
+          <div class="form-grid">
+            <div class="form-group"><label>Material</label><input type="text" id="productMaterial" name="material" required placeholder="e.g. Steel Frame + Plywood"></div>
+            <div class="form-group"><label>Color</label><input type="text" id="productColor" name="color" required placeholder="e.g. Various / Fabric collection"></div>
+            <div class="form-group full"><label>Dimensions</label><input type="text" id="productDimensions" name="dimensions" required placeholder="e.g. 50 x 87.5 x 66 cm, Seat: 48 x 50 cm"></div>
+            <div class="form-group"><label>Weight</label><input type="text" id="productWeight" name="weight" placeholder="e.g. 21 kg"></div>
+            <div class="form-group"><label>Volume</label><input type="text" id="productVolume" name="volume" placeholder="e.g. 0.15 m³"></div>
+            <div class="form-group"><label>40HC Loadability</label><input type="text" id="productLoadability" name="loadability" placeholder="e.g. 195 sets"></div>
+            <div class="form-group full"><label>Packaging</label><input type="text" id="productPackaging" name="packaging" placeholder="e.g. 1 pc/ctn, 58x52x70 cm"></div>
+            <div class="form-group"><label>HS Code</label><input type="text" id="productHsCode" name="hsCode" placeholder="e.g. 9401.61"></div>
+            <div class="form-group"><label>Certifications</label><input type="text" id="productCertifications" name="certifications" placeholder="e.g. EN 12520, FSC"></div>
+            <div class="form-group"><label>Warranty</label><input type="text" id="productWarranty" name="warranty" placeholder="e.g. 3 years structural"></div>
+            <div class="form-group"><label>Supplier</label><input type="text" id="productSupplier" name="supplier" placeholder="Factory name or code"></div>
+          </div>
+        </div>
+
+        <!-- Trade Tab -->
+        <div class="modal-tab-panel" id="tab-trade">
+          <div class="form-grid">
+            <div class="form-group"><label>Price</label><input type="number" id="productPrice" name="price" step="0.01" min="0" placeholder="0.00"></div>
+            <div class="form-group"><label>Currency</label><select id="productCurrency" name="currency"><option value="USD">USD</option><option value="EUR">EUR</option><option value="CNY">CNY</option><option value="DKK">DKK</option></select></div>
+            <div class="form-group"><label>MOQ</label><input type="text" id="productMoq" name="moq" placeholder="e.g. 50 pcs"></div>
+            <div class="form-group"><label>Lead Time</label><input type="text" id="productLeadTime" name="leadTime" placeholder="e.g. 35-45 days"></div>
+            <div class="form-group full"><label>Tags</label><input type="text" id="productTags" name="tags" placeholder="Comma separated: outdoor, stackable, customizable"></div>
+          </div>
+        </div>
+
+        <!-- Media Tab -->
+        <div class="modal-tab-panel" id="tab-media">
+          <div class="form-grid">
+            <div class="form-group full"><label>Main Image</label><div class="image-preview" id="imagePreview"><span style="color:var(--gray)">No image selected</span></div><input type="hidden" id="productImg" name="img" required><div style="margin-top:8px"><label class="btn btn-secondary image-upload-label" style="cursor:pointer"><input type="file" id="productImageUpload" accept="image/*" style="display:none" onchange="handleProductImageUpload(this.files)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Choose Image</label><button type="button" class="btn btn-secondary btn-sm" onclick="openImagePicker()" style="margin-left:8px">Pick from Library</button></div></div>
+            <div class="form-group full"><label>Additional Images (Gallery)</label><div class="image-preview" id="galleryPreview" style="height:120px;display:flex;flex-wrap:wrap;align-content:flex-start"><span style="color:var(--gray);width:100%">No additional images</span></div><input type="hidden" id="productImages" name="images"><div style="margin-top:8px"><label class="btn btn-secondary image-upload-label" style="cursor:pointer"><input type="file" id="productGalleryUpload" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(this.files)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Add Gallery Images</label></div></div>
+            <div class="form-group"><label>Video URL</label><input type="url" id="productVideoUrl" name="videoUrl" placeholder="https://youtube.com/... or .mp4"></div>
+            <div class="form-group"><label>3D Model URL</label><input type="url" id="productModel3dUrl" name="model3dUrl" placeholder="https://sketchfab.com/... or .glb"></div>
+          </div>
+        </div>
+
+        <!-- Advanced Tab -->
+        <div class="modal-tab-panel" id="tab-advanced">
+          <div class="form-grid">
+            <div class="form-group full"><label>Internal Notes</label><textarea id="productNotes" name="notes" placeholder="Internal notes for your team (not shown on website)"></textarea></div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeProductModal()">Cancel</button><button class="btn btn-primary" onclick="saveProduct()">Save Product</button></div>
+  </div>
+</div>
+
+<!-- Image Picker Modal -->
+<div class="modal-overlay" id="imagePickerModal">
+  <div class="modal" style="max-width:900px"><div class="modal-header"><h3>Select Image</h3><button class="modal-close" onclick="closeImagePicker()">&times;</button></div><div class="modal-body"><div class="image-grid" id="pickerImageGrid"></div><div class="empty-state" id="pickerEmpty" style="display:none"><p>No images available. Upload some first.</p></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeImagePicker()">Cancel</button></div></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '/api';
+let allProducts = {};
+let allImages = [];
+let editingSku = null;
+let galleryImages = [];
+
+// --- Utils ---
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+async function fetchJSON(url, opts={}) {
+  const res = await fetch(url, {headers:{'Content-Type':'application/json'}, ...opts});
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+// --- Navigation ---
+document.querySelectorAll('.sidebar-nav li').forEach(li => {
+  li.addEventListener('click', () => {
+    document.querySelectorAll('.sidebar-nav li').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    li.classList.add('active');
+    document.getElementById('page-' + li.dataset.page).classList.add('active');
+    closeSidebar();
+  });
+});
+document.querySelectorAll('.modal-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.modal-tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+document.getElementById('mobileMenuBtn').addEventListener('click', toggleSidebar);
+document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').style.display=document.getElementById('sidebar').classList.contains('open')?'block':'none'}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').style.display='none'}
+
+// --- Load Data ---
+async function loadAll() {
+  try {
+    allProducts = await fetchJSON(API + '/products');
+    allImages = await fetchJSON(API + '/images');
+    renderDashboard();
+    renderProducts();
+    renderImages();
+    renderCategoryList();
+  } catch(e) { showToast(e.message, 'error'); }
+}
+
+// --- Dashboard ---
+function renderDashboard() {
+  let total = 0;
+  const byCat = {};
+  const byStatus = {active:0, new:0, bestseller:0, outofstock:0};
+  for (const [cat, items] of Object.entries(allProducts)) {
+    byCat[cat] = items.length;
+    total += items.length;
+    for (const p of items) byStatus[p.status || 'active']++;
+  }
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-info"><h3>Total Products</h3><div class="num">${total}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">🍽️</div><div class="stat-info"><h3>Dining Chairs</h3><div class="num">${byCat.diningChairs||0}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">🪑</div><div class="stat-info"><h3>Bar Stools</h3><div class="num">${byCat.barStools||0}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">🛋️</div><div class="stat-info"><h3>Relaxing Chairs</h3><div class="num">${byCat.relaxingChairs||0}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">🛏️</div><div class="stat-info"><h3>Sofas</h3><div class="num">${byCat.sofas||0}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">💺</div><div class="stat-info"><h3>Recliners</h3><div class="num">${byCat.recliners||0}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><h3>New</h3><div class="num">${byStatus.new}</div></div></div>
+    <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-info"><h3>Bestsellers</h3><div class="num">${byStatus.bestseller}</div></div></div>
+  `;
+  const recent = [];
+  for (const [cat, items] of Object.entries(allProducts)) {
+    for (const p of items) recent.push({...p, category: cat});
+  }
+  recent.sort((a,b)=>b.sku.localeCompare(a.sku));
+  document.getElementById('recentProductsBody').innerHTML = recent.slice(0,10).map(p => `
+    <tr><td><img class="product-thumb" src="${p.img}" alt=""></td>
+    <td class="sku">${p.sku}</td><td>${p.name}</td>
+    <td><span class="category-badge">${formatCategory(p.category)}</span></td>
+    <td><span class="status-badge status-${p.status||'active'}">${p.status||'active'}</span></td>
+    <td><div class="actions"><button class="action-btn" onclick="editProduct('${p.sku}')" title="Edit">✏️</button><button class="action-btn delete" onclick="deleteProduct('${p.sku}')" title="Delete">🗑️</button></div></td></tr>
+  `).join('');
+}
+
+// --- Products ---
+function renderProducts() {
+  const body = document.getElementById('productsBody');
+  const empty = document.getElementById('productsEmpty');
+  let rows = [];
+  for (const [cat, items] of Object.entries(allProducts)) {
+    for (const p of items) rows.push({...p, category: cat});
+  }
+  if (rows.length === 0) { body.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  rows.sort((a,b)=>a.sku.localeCompare(b.sku));
+  body.innerHTML = rows.map(p => `
+    <tr><td><img class="product-thumb" src="${p.img}" alt=""></td>
+    <td class="sku">${p.sku}</td><td>${p.name}</td>
+    <td><span class="category-badge">${formatCategory(p.category)}</span></td>
+    <td><span class="status-badge status-${p.status||'active'}">${p.status||'active'}</span></td>
+    <td>${p.price ? (p.currency||'USD')+' '+p.price : '-'}</td>
+    <td>${p.moq || '-'}</td>
+    <td><div class="actions"><button class="action-btn" onclick="editProduct('${p.sku}')" title="Edit">✏️</button><button class="action-btn delete" onclick="deleteProduct('${p.sku}')" title="Delete">🗑️</button></div></td></tr>
+  `).join('');
+}
+function formatCategory(cat) { return cat.replace(/([A-Z])/g,' $1').replace(/^./,c=>c.toUpperCase()); }
+
+function openProductModal(product=null) {
+  editingSku = product?.sku || null;
+  galleryImages = [];
+  document.getElementById('modalTitle').textContent = product ? 'Edit Product' : 'Add Product';
+  document.getElementById('productMode').value = product ? 'edit' : 'create';
+  document.getElementById('productForm').reset();
+  document.getElementById('productSku').value = product?.sku || '';
+  document.getElementById('productSkuInput').value = product?.sku || '';
+  document.getElementById('productSkuInput').disabled = !!product;
+  
+  if (product) {
+    document.getElementById('productCategory').value = product.category || 'diningChairs';
+    document.getElementById('productStatus').value = product.status || 'active';
+    document.getElementById('productName').value = product.name || '';
+    document.getElementById('productDesc').value = product.desc || '';
+    document.getElementById('productFeatures').value = product.features || '';
+    document.getElementById('productNotes').value = product.notes || '';
+    document.getElementById('productMaterial').value = product.material || '';
+    document.getElementById('productColor').value = product.color || '';
+    document.getElementById('productDimensions').value = product.dimensions || '';
+    document.getElementById('productWeight').value = product.weight || '';
+    document.getElementById('productVolume').value = product.volume || '';
+    document.getElementById('productLoadability').value = product.loadability || '';
+    document.getElementById('productPackaging').value = product.packaging || '';
+    document.getElementById('productHsCode').value = product.hsCode || '';
+    document.getElementById('productCertifications').value = product.certifications || '';
+    document.getElementById('productWarranty').value = product.warranty || '';
+    document.getElementById('productSupplier').value = product.supplier || '';
+    document.getElementById('productPrice').value = product.price || '';
+    document.getElementById('productCurrency').value = product.currency || 'USD';
+    document.getElementById('productMoq').value = product.moq || '';
+    document.getElementById('productLeadTime').value = product.leadTime || '';
+    document.getElementById('productTags').value = (product.tags||[]).join(', ');
+    document.getElementById('productVideoUrl').value = product.videoUrl || '';
+    document.getElementById('productModel3dUrl').value = product.model3dUrl || '';
+    document.getElementById('productImg').value = product.img || '';
+    updateImagePreview(product.img || '');
+    galleryImages = product.images ? [...product.images] : (product.img ? [product.img] : []);
+    // Remove main image from gallery if it's the same
+    if (galleryImages.length > 1 && galleryImages[0] === product.img) galleryImages.shift();
+    updateGalleryPreview();
+  } else {
+    document.getElementById('productCategory').value = 'diningChairs';
+    document.getElementById('productStatus').value = 'active';
+    document.getElementById('productCurrency').value = 'USD';
+    updateImagePreview('');
+    updateGalleryPreview();
+  }
+  document.getElementById('productModal').classList.add('active');
+}
+function closeProductModal() { document.getElementById('productModal').classList.remove('active'); editingSku = null; galleryImages = []; }
+function updateImagePreview(url) {
+  const el = document.getElementById('imagePreview');
+  if (url) { el.innerHTML = `<img src="${url}" alt="">`; el.classList.add('has-image'); }
+  else { el.innerHTML = '<span style="color:var(--gray)">No image selected</span>'; el.classList.remove('has-image'); }
+}
+function updateGalleryPreview() {
+  const el = document.getElementById('galleryPreview');
+  if (galleryImages.length === 0) { el.innerHTML = '<span style="color:var(--gray);width:100%">No additional images</span>'; return; }
+  el.innerHTML = galleryImages.map((img,i) => `
+    <div style="position:relative;width:100px;height:100px;border-radius:6px;overflow:hidden;border:1px solid var(--gray-light);margin:4px">
+      <img src="${img}" alt="Gallery ${i+1}" style="width:100%;height:100%;object-fit:cover">
+      <button type="button" onclick="removeGalleryImage(${i})" style="position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.7);color:white;border:none;cursor:pointer;font-size:12px;line-height:1">×</button>
+    </div>
+  `).join('');
+}
+function removeGalleryImage(i) { galleryImages.splice(i,1); updateGalleryPreview(); }
+
+async function handleProductImageUpload(files) {
+  if (!files.length) return;
+  const formData = new FormData(); formData.append('image', files[0]);
+  try {
+    const data = await fetch(API + '/upload-image', {method:'POST',body:formData}).then(r=>r.json());
+    document.getElementById('productImg').value = data.url;
+    updateImagePreview(data.url);
+    allImages = await fetchJSON(API + '/images');
+    showToast('Main image uploaded');
+  } catch(e) { showToast(e.message, 'error'); }
+}
+async function handleGalleryUpload(files) {
+  for (const file of files) {
+    const formData = new FormData(); formData.append('image', file);
+    try {
+      const data = await fetch(API + '/upload-image', {method:'POST',body:formData}).then(r=>r.json());
+      galleryImages.push(data.url);
+    } catch(e) { showToast(e.message, 'error'); }
+  }
+  updateGalleryPreview();
+  showToast(`${files.length} gallery images uploaded`);
+}
+function openImagePicker() {
+  document.getElementById('imagePickerModal').classList.add('active');
+  renderImagePicker();
+}
+function closeImagePicker() { document.getElementById('imagePickerModal').classList.remove('active'); }
+function renderImagePicker() {
+  const grid = document.getElementById('pickerImageGrid');
+  const empty = document.getElementById('pickerEmpty');
+  if (!allImages.length) { grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML = allImages.map(img => `
+    <div class="image-item" onclick="pickImage('${img.url}')">
+      <img src="${img.url}" alt="${img.filename}">
+      <div class="image-item-info">${img.filename}</div>
+    </div>
+  `).join('');
+}
+function pickImage(url) {
+  document.getElementById('productImg').value = url;
+  updateImagePreview(url);
+  closeImagePicker();
+}
+
+async function saveProduct() {
+  const form = document.getElementById('productForm');
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.img = document.getElementById('productImg').value;
+  data.sku = document.getElementById('productSkuInput').value;
+  data.category = document.getElementById('productCategory').value;
+  data.status = document.getElementById('productStatus').value;
+  data.price = data.price ? parseFloat(data.price) : null;
+  data.moq = data.moq || null;
+  data.leadTime = data.leadTime || null;
+  data.tags = data.tags ? data.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+  data.images = galleryImages.length ? [data.img, ...galleryImages] : [data.img];
+  data.videoUrl = data.videoUrl || null;
+  data.model3dUrl = data.model3dUrl || null;
+  // Clean nulls
+  Object.keys(data).forEach(k => { if (data[k] === '' || data[k] === null) delete data[k]; });
+  
+  if (!data.img) return showToast('Please select a main image', 'error');
+  
+  try {
+    if (editingSku) {
+      await fetchJSON(API + '/products/' + editingSku, {method:'PUT',body:JSON.stringify(data)});
+      showToast('Product updated');
+    } else {
+      await fetchJSON(API + '/products', {method:'POST',body:JSON.stringify(data)});
+      showToast('Product created');
+    }
+    closeProductModal();
+    loadAll();
+  } catch(e) { showToast(e.message, 'error'); }
+}
+async function editProduct(sku) {
+  const product = findProduct(sku);
+  if (product) openProductModal(product);
+}
+function findProduct(sku) {
+  for (const [cat, items] of Object.entries(allProducts)) {
+    const p = items.find(x => x.sku === sku);
+    if (p) return {...p, category: cat};
+  }
+  return null;
+}
+async function deleteProduct(sku) {
+  if (!confirm('Delete this product?')) return;
+  try {
+    await fetchJSON(API + '/products/' + sku, {method:'DELETE'});
+    showToast('Product deleted');
+    loadAll();
+  } catch(e) { showToast(e.message, 'error'); }
+}
+
+// --- Images ---
+async function renderImages() {
+  allImages = await fetchJSON(API + '/images');
+  const grid = document.getElementById('imageGrid');
+  const empty = document.getElementById('imagesEmpty');
+  if (!allImages.length) { grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML = allImages.map(img => `
+    <div class="image-item">
+      <img src="${img.url}" alt="${img.filename}">
+      <div class="image-item-info">${img.filename}</div>
+      <div class="image-item-actions">
+        <button onclick="event.stopPropagation();copyImageUrl('${img.url}')" title="Copy URL">📋</button>
+        <button onclick="event.stopPropagation();deleteImage('${img.filename}')" title="Delete">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+async function uploadImages(files) {
+  for (const file of files) {
+    const formData = new FormData(); formData.append('image', file);
+    try { await fetch(API + '/upload-image', {method:'POST',body:formData}).then(r=>r.json()); }
+    catch(e) { showToast(e.message, 'error'); }
+  }
+  renderImages();
+  showToast('Images uploaded');
+}
+function copyImageUrl(url) { navigator.clipboard.writeText(url); showToast('URL copied'); }
+async function deleteImage(filename) {
+  if (!confirm('Delete this image?')) return;
+  try { await fetchJSON(API + '/images/' + filename, {method:'DELETE'}); showToast('Image deleted'); renderImages(); }
+  catch(e) { showToast(e.message, 'error'); }
+}
+
+// --- Generate Pages ---
+function renderCategoryList() {
+  const list = document.getElementById('categoryList');
+  list.innerHTML = Object.entries(allProducts).map(([cat, items]) => `
+    <li style="padding:10px 12px;background:var(--white);border:1px solid var(--gray-light);border-radius:8px;display:flex;justify-content:space-between;align-items:center">
+      <span><strong>${formatCategory(cat)}</strong></span>
+      <span style="color:var(--gray);font-size:12px">${items.length} products</span>
+    </li>
+  `).join('');
+}
+async function generatePages() {
+  const status = document.getElementById('generateStatus');
+  status.textContent = 'Generating...';
+  try {
+    await fetchJSON(API + '/generate-pages', {method:'POST'});
+    status.textContent = '✓ Done!';
+    showToast('Pages regenerated successfully');
+    setTimeout(() => status.textContent = '', 3000);
+  } catch(e) { status.textContent = '✗ Failed'; showToast(e.message, 'error'); }
+}
+
+// --- Init ---
+loadAll();
+window.addEventListener('resize', () => {
+  document.getElementById('mobileMenuBtn').style.display = window.innerWidth <= 1024 ? 'flex' : 'none';
+});
+window.dispatchEvent(new Event('resize'));
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => { if(e.target===overlay) overlay.classList.remove('active'); });
+});
+</script>
+</body>
+</html>
