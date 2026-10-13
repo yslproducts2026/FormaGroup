@@ -5575,7 +5575,7 @@ function ensureModal(){
   ov=document.createElement("div");
   ov.id="yslModalOverlay";
   ov.className="modal-overlay";
-  ov.innerHTML="<div class=\"modal-dialog\"><button class=\"modal-close\" id=\"yslModalClose\">&times;</button><div class=\"modal-image-wrap\"><div id=\"yslModalImageSlider\"></div></div><div class=\"modal-body\"><h2 id=\"yslModalName\"></h2><div class=\"modal-sku\" id=\"yslModalSku\"></div><div class=\"modal-badges\" id=\"yslModalBadges\"></div><div class=\"modal-tabs\" id=\"yslModalTabs\"></div><div class=\"modal-tab-panels\" id=\"yslModalTabPanels\"></div><a href=\"mailto:info@formagroup.com?subject=Inquiry:%20\"+encodeURIComponent(document.getElementById('yslModalName').textContent)+"&body=SKU:%20\"+encodeURIComponent(document.getElementById('yslModalSku').textContent.replace('SKU: ',''))+"\n\nI'm interested in this product. Please provide more details.\" class=\"modal-cta\">Inquire About This Product</a></div></div>";
+  ov.innerHTML='<div class="modal-dialog"><button class="modal-close" id="yslModalClose">&times;</button><div class="modal-image-wrap"><div id="yslModalImageSlider"></div></div><div class="modal-body"><h2 id="yslModalName"></h2><div class="modal-sku" id="yslModalSku"></div><div class="modal-badges" id="yslModalBadges"></div><div class="modal-tabs" id="yslModalTabs"></div><div class="modal-tab-panels" id="yslModalTabPanels"></div><a href="mailto:info@formagroup.com?subject=Inquiry:%20"+encodeURIComponent(document.getElementById("yslModalName").textContent)+"&body=SKU:%20"+encodeURIComponent(document.getElementById("yslModalSku").textContent.replace("SKU: ",""))+"%0A%0AI\'m interested in this product. Please provide more details." class="modal-cta">Inquire About This Product</a></div></div>';
   document.body.appendChild(ov);
   cb=document.getElementById("yslModalClose");
   ov.addEventListener('click', function(e){
@@ -5777,7 +5777,7 @@ document.addEventListener("DOMContentLoaded",function(){
     var cards=document.querySelectorAll(".card");
     var items=P[cat];
     for(var i=0;i<cards.length&&i<items.length;i++){
-      (function(card,p){if(!card.closest('.card-link')){card.addEventListener("click",function(){openModal(p);});})(cards[i],items[i]);
+      (function(card,p){if(!card.closest('.card-link')){card.addEventListener("click",function(){openModal(p);});}})(cards[i],items[i]);
     }
   }
 });
