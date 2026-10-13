@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded",function(){
     var cards=document.querySelectorAll(".card");
     var items=P[cat];
     for(var i=0;i<cards.length&&i<items.length;i++){
-      (function(card,p){card.addEventListener("click",function(){openModal(p);});})(cards[i],items[i]);
+      (function(card,p){if(!card.closest('.card-link')){card.addEventListener("click",function(){openModal(p);});})(cards[i],items[i]);
     }
   }
 });
