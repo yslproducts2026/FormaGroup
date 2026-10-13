@@ -4,11 +4,11 @@ const path = require('path');
 const DATA_FILE = path.join(__dirname, 'products.json');
 
 const CATEGORIES = [
-  { key: 'diningChairs', label: 'Dining Chair', file: 'dining-chairs.html', title: 'Dining Chair Collection' },
-  { key: 'barStools', label: 'Bar Stool', file: 'bar-stools.html', title: 'Bar Stool Collection' },
-  { key: 'relaxingChairs', label: 'Relaxing Chair', file: 'relaxing-chairs.html', title: 'Relaxing Chair Collection' },
-  { key: 'sofas', label: 'Sofa', file: 'sofas.html', title: 'Sofa Collection' },
-  { key: 'recliners', label: 'Recliner', file: 'recliners.html', title: 'Recliner Collection' }
+  { key: 'diningChairs', label: 'Dining Chair', file: 'dining-chairs.html', title: 'Dining Chair Collection', detailDir: 'dining-chairs' },
+  { key: 'barStools', label: 'Bar Stool', file: 'bar-stools.html', title: 'Bar Stool Collection', detailDir: 'bar-stools' },
+  { key: 'relaxingChairs', label: 'Relaxing Chair', file: 'relaxing-chairs.html', title: 'Relaxing Chair Collection', detailDir: 'relaxing-chairs' },
+  { key: 'sofas', label: 'Sofa', file: 'sofas.html', title: 'Sofa Collection', detailDir: 'sofas' },
+  { key: 'recliners', label: 'Recliner', file: 'recliners.html', title: 'Recliner Collection', detailDir: 'recliners' }
 ];
 
 function loadProducts() {
@@ -25,17 +25,20 @@ function getFooterLinks() {
 
 function generateCategoryPage(cat, products) {
   const cards = products.map(p => `
-    <div class="card" data-sku="${p.sku}">
-      <img loading="lazy" src="${p.img}" alt="${p.name}">
-      <div class="card-name">${p.name}</div>
-      <div class="card-spec">${p.material}</div>
-    </div>
+    <a href="${cat.detailDir}/${p.sku}.html" class="card-link">
+      <div class="card" data-sku="${p.sku}">
+        <img loading="lazy" src="${p.img}" alt="${p.name}">
+        <div class="card-name">${p.name}</div>
+        <div class="card-spec">${p.material}</div>
+      </div>
+    </a>
   `).join('');
 
   return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${cat.title} - Forma Group</title>
-<link rel="stylesheet" href="css/style.css"></head>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/detail.css"></head>
 <body data-category="${cat.key}">
 <nav><div class="nav-inner">
   <a href="index.html" class="nav-logo"><img src="logo.png" alt="Forma Group"><span>Forma Group</span></a>
@@ -51,7 +54,8 @@ function generateCategoryPage(cat, products) {
   <p style="color:#999;font-size:13px;">Email: info@formagroup.com</p>
   <p style="color:#999;font-size:13px;">Tel: +86-15868213949</p></div>
 </div><div class="footer-bottom"><p><span>&copy; 2026 Forma Group. All rights reserved.</span></p></div></footer>
-<script src="js/modal.js"></script></body></html>`;
+<script src="js/modal.js"></script>
+<script src="js/detail.js"></script></body></html>`;
 }
 
 function generateIndexPage(products) {
@@ -126,7 +130,6 @@ function generateModalJS(products) {
   const allProducts = {};
   for (const [cat, items] of Object.entries(products)) {
     allProducts[cat] = items.map(p => {
-      // Ensure all fields exist with defaults
       const defaults = {
         price: '', currency: 'USD', moq: '', leadTime: '', packaging: '', hsCode: '',
         certifications: '', weight: '', volume: '', loadability: '', features: '',
@@ -207,7 +210,6 @@ function openModal(p){
   renderSlider();
   document.getElementById("yslModalName").textContent=p.name;
   document.getElementById("yslModalSku").textContent="SKU: "+p.sku;
-  // Badges
   var badges=[];
   if(p.status==='new') badges.push('<span class="badge badge-new">New</span>');
   if(p.status==='bestseller') badges.push('<span class="badge badge-hot">Bestseller</span>');
@@ -215,7 +217,6 @@ function openModal(p){
   if(p.moq) badges.push('<span class="badge badge-moq">MOQ: '+esc(p.moq)+'</span>');
   if(p.leadTime) badges.push('<span class="badge badge-lead">Lead: '+esc(p.leadTime)+'</span>');
   document.getElementById("yslModalBadges").innerHTML=badges.join(' ');
-  // Build tabs
   var tabs = [
     {id:'overview', label:'Overview', icon:'📋'},
     {id:'dimensions', label:'Dimensions', icon:'📐'},
@@ -228,7 +229,6 @@ function openModal(p){
   ];
   var tabsHtml = tabs.map(t => '<button class="modal-tab-btn '+(t.id==='overview'?'active':'')+'" data-tab="'+t.id+'">'+t.icon+' '+t.label+'</button>').join('');
   document.getElementById('yslModalTabs').innerHTML = tabsHtml;
-  // Build panels
   var panelsHtml = tabs.map(t => '<div class="modal-tab-panel '+(t.id==='overview'?'active':'')+'" id="yslModalPanel-'+t.id+'">'+renderPanel(t.id, p)+'</div>').join('');
   document.getElementById('yslModalTabPanels').innerHTML = panelsHtml;
   ov.classList.add("active");

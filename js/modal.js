@@ -18,7 +18,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310021.jpg"
+        "images/products/FG310021.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -89,7 +89,7 @@ var P={
       "boxCount": "",
       "sku": "FG310021",
       "name": "FG310021",
-      "img": "images/products/FG310021.jpg",
+      "img": "images/products/FG310021.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "50 x 87.5 x 66 cm, Seat: 48 x 50 cm, SH: 50 cm",
@@ -130,7 +130,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310022.jpg"
+        "images/products/FG310022.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -201,7 +201,7 @@ var P={
       "boxCount": "",
       "sku": "FG310022",
       "name": "FG310022",
-      "img": "images/products/FG310022.jpg",
+      "img": "images/products/FG310022.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "59 x 87.5 x 66 cm, Seat: 48 x 44 cm, SH: 50 cm",
@@ -242,7 +242,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310031.jpg"
+        "images/products/FG310031.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -313,7 +313,7 @@ var P={
       "boxCount": "",
       "sku": "FG310031",
       "name": "FG310031",
-      "img": "images/products/FG310031.jpg",
+      "img": "images/products/FG310031.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "54 x 87 x 66.5 cm, Seat: 45 x 54 cm, SH: 51.5 cm",
@@ -354,7 +354,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310042.jpg"
+        "images/products/FG310042.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -425,7 +425,7 @@ var P={
       "boxCount": "",
       "sku": "FG310042",
       "name": "FG310042",
-      "img": "images/products/FG310042.jpg",
+      "img": "images/products/FG310042.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "58 x 87 x 67 cm, Seat: 49.5 x 44 cm, SH: 51 cm",
@@ -466,7 +466,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310052.jpg"
+        "images/products/FG310052.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -537,7 +537,7 @@ var P={
       "boxCount": "",
       "sku": "FG310052",
       "name": "FG310052",
-      "img": "images/products/FG310052.jpg",
+      "img": "images/products/FG310052.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "61 x 87.5 x 63 cm, Seat: 48.5 x 53 cm, SH: 52 cm",
@@ -578,7 +578,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310062.jpg"
+        "images/products/FG310062.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -649,7 +649,7 @@ var P={
       "boxCount": "",
       "sku": "FG310062",
       "name": "FG310062",
-      "img": "images/products/FG310062.jpg",
+      "img": "images/products/FG310062.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "56 x 87 x 63 cm, Seat: 48 x 42 cm, SH: 50 cm",
@@ -690,7 +690,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310072.jpg"
+        "images/products/FG310072.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -761,7 +761,7 @@ var P={
       "boxCount": "",
       "sku": "FG310072",
       "name": "FG310072",
-      "img": "images/products/FG310072.jpg",
+      "img": "images/products/FG310072.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "64 x 88 x 65.5 cm, Seat: 49.5 x 42 cm, SH: 50 cm",
@@ -802,7 +802,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310082.jpg"
+        "images/products/FG310082.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -873,7 +873,7 @@ var P={
       "boxCount": "",
       "sku": "FG310082",
       "name": "FG310082",
-      "img": "images/products/FG310082.jpg",
+      "img": "images/products/FG310082.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "64.5 x 85 x 65.5 cm, Seat: 47 x 47 cm, SH: 50 cm",
@@ -914,7 +914,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG310092.jpg"
+        "images/products/FG310092.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -985,7 +985,7 @@ var P={
       "boxCount": "",
       "sku": "FG310092",
       "name": "FG310092",
-      "img": "images/products/FG310092.jpg",
+      "img": "images/products/FG310092.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "59.5 x 93 x 57 cm, Seat: 44 x 40 cm, SH: 49 cm",
@@ -1026,7 +1026,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG320011.jpg"
+        "images/products/FG320011.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1097,7 +1097,7 @@ var P={
       "boxCount": "",
       "sku": "FG320011",
       "name": "FG320011",
-      "img": "images/products/FG320011.jpg",
+      "img": "images/products/FG320011.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "52 x 82.5 x 59 cm, Seat: 42 x 52 cm, SH: 46.5 cm",
@@ -1140,7 +1140,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG330010.jpg"
+        "images/products/FG330010.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1211,7 +1211,7 @@ var P={
       "boxCount": "",
       "sku": "FG330010",
       "name": "FG330010",
-      "img": "images/products/FG330010.jpg",
+      "img": "images/products/FG330010.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "46 x 90 x 53 cm, Seat: 40 x 42 cm, SH: 63.5 cm",
@@ -1252,7 +1252,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG330020.jpg"
+        "images/products/FG330020.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1323,7 +1323,7 @@ var P={
       "boxCount": "",
       "sku": "FG330020",
       "name": "FG330020",
-      "img": "images/products/FG330020.jpg",
+      "img": "images/products/FG330020.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "46.5 x 52 x 91 cm, Seat: 37.5 x 46.5 cm, SH: 61.5 cm",
@@ -1364,7 +1364,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG330040.jpg"
+        "images/products/FG330040.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1435,7 +1435,7 @@ var P={
       "boxCount": "",
       "sku": "FG330040",
       "name": "FG330040",
-      "img": "images/products/FG330040.jpg",
+      "img": "images/products/FG330040.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "dimensions": "52 x 88 x 50 cm, Seat: 38 x 38 cm, SH: 63 cm",
@@ -1478,7 +1478,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG113012.jpg"
+        "images/products/FG113012.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1549,7 +1549,7 @@ var P={
       "boxCount": "88 x 76 x 52",
       "sku": "FG113012",
       "name": "FG113012",
-      "img": "images/products/FG113012.jpg",
+      "img": "images/products/FG113012.webp",
       "material": "Steel Frame + Plywood + Electric Control",
       "color": "Forma works collection of fabric and leather",
       "dimensions": "75 x 109 x 81 cm, Seat: 50 x 50 cm, SH: 45 cm",
@@ -1590,7 +1590,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG113022.jpg"
+        "images/products/FG113022.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1661,7 +1661,7 @@ var P={
       "boxCount": "carton box",
       "sku": "FG113022",
       "name": "FG113022",
-      "img": "images/products/FG113022.jpg",
+      "img": "images/products/FG113022.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "dimensions": "76.5 x 115.5 x 85 cm, Seat: 49.5 x 50.5 cm, SH: 45.5 cm",
@@ -1702,7 +1702,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG113032.jpg"
+        "images/products/FG113032.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1773,7 +1773,7 @@ var P={
       "boxCount": "94 x 72 x 52",
       "sku": "FG113032",
       "name": "FG113032",
-      "img": "images/products/FG113032.jpg",
+      "img": "images/products/FG113032.webp",
       "material": "Steel Frame + Plywood + Electric Control",
       "color": "VP 3265 + VP 2550 + VP 1870",
       "dimensions": "70.5 x 111 x 84 cm, Seat: 51 x 48 cm, SH: 45.5 cm",
@@ -1814,7 +1814,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG113042.jpg"
+        "images/products/FG113042.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1885,7 +1885,7 @@ var P={
       "boxCount": "carton box",
       "sku": "FG113042",
       "name": "FG113042",
-      "img": "images/products/FG113042.jpg",
+      "img": "images/products/FG113042.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "dimensions": "67 x 107 x 84 cm, Seat: 51 x 49 cm, SH: 45.5 cm",
@@ -1926,7 +1926,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG113052.jpg"
+        "images/products/FG113052.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -1997,7 +1997,7 @@ var P={
       "boxCount": "carton box",
       "sku": "FG113052",
       "name": "FG113052",
-      "img": "images/products/FG113052.jpg",
+      "img": "images/products/FG113052.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "dimensions": "73 x 111 x 82.5 cm, Seat: 51 x 49 cm, SH: 45.5 cm",
@@ -2038,7 +2038,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/CH-255099P2.jpg"
+        "images/products/CH-255099P2.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2109,7 +2109,7 @@ var P={
       "boxCount": "carton box",
       "sku": "CH-255099P2",
       "name": "CH-255099P2",
-      "img": "images/products/CH-255099P2.jpg",
+      "img": "images/products/CH-255099P2.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "desc": "40HC: 84 sets. Net Wt: N/A kg",
@@ -2149,7 +2149,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG113102.jpg"
+        "images/products/FG113102.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2220,7 +2220,7 @@ var P={
       "boxCount": "carton box",
       "sku": "FG113102",
       "name": "FG113102",
-      "img": "images/products/FG113102.jpg",
+      "img": "images/products/FG113102.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "desc": "40HC: 280 sets. Net Wt: N/A kg",
@@ -2260,7 +2260,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/CH-253109L2.jpg"
+        "images/products/CH-253109L2.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2331,7 +2331,7 @@ var P={
       "boxCount": "carton box",
       "sku": "CH-253109L2",
       "name": "CH-253109L2",
-      "img": "images/products/CH-253109L2.jpg",
+      "img": "images/products/CH-253109L2.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "desc": "40HC: 77 sets. Net Wt: N/A kg",
@@ -2371,7 +2371,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG140174.jpg"
+        "images/products/FG140174.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2442,7 +2442,7 @@ var P={
       "boxCount": "",
       "sku": "FG140174",
       "name": "FG140174",
-      "img": "images/products/FG140174.jpg",
+      "img": "images/products/FG140174.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "desc": "40HC: N/A sets. Net Wt: N/A kg",
@@ -2479,7 +2479,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG140211.jpg"
+        "images/products/FG140211.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2550,7 +2550,7 @@ var P={
       "boxCount": "",
       "sku": "FG140211",
       "name": "FG140211",
-      "img": "images/products/FG140211.jpg",
+      "img": "images/products/FG140211.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "desc": "40HC: N/A sets. Net Wt: N/A kg",
@@ -2586,7 +2586,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG140231.jpg"
+        "images/products/FG140231.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2657,7 +2657,7 @@ var P={
       "boxCount": "",
       "sku": "FG140231",
       "name": "FG140231",
-      "img": "images/products/FG140231.jpg",
+      "img": "images/products/FG140231.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "desc": "40HC: N/A sets. Net Wt: N/A kg",
@@ -2694,7 +2694,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG140241.jpg"
+        "images/products/FG140241.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2765,7 +2765,7 @@ var P={
       "boxCount": "",
       "sku": "FG140241",
       "name": "FG140241",
-      "img": "images/products/FG140241.jpg",
+      "img": "images/products/FG140241.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma Fabric Collection",
       "desc": "40HC: N/A sets. Net Wt: N/A kg",
@@ -2802,7 +2802,7 @@ var P={
       "tags": [],
       "status": "active",
       "images": [
-        "images/products/FG140272.jpg"
+        "images/products/FG140272.webp"
       ],
       "videoUrl": "",
       "model3dUrl": "",
@@ -2873,7 +2873,7 @@ var P={
       "boxCount": "",
       "sku": "FG140272",
       "name": "FG140272",
-      "img": "images/products/FG140272.jpg",
+      "img": "images/products/FG140272.webp",
       "material": "Steel Frame + Plywood",
       "color": "Forma works collection of fabric and leather",
       "desc": "40HC: 1 sets. Net Wt: N/A kg",
@@ -5621,7 +5621,6 @@ function openModal(p){
   renderSlider();
   document.getElementById("yslModalName").textContent=p.name;
   document.getElementById("yslModalSku").textContent="SKU: "+p.sku;
-  // Badges
   var badges=[];
   if(p.status==='new') badges.push('<span class="badge badge-new">New</span>');
   if(p.status==='bestseller') badges.push('<span class="badge badge-hot">Bestseller</span>');
@@ -5629,7 +5628,6 @@ function openModal(p){
   if(p.moq) badges.push('<span class="badge badge-moq">MOQ: '+esc(p.moq)+'</span>');
   if(p.leadTime) badges.push('<span class="badge badge-lead">Lead: '+esc(p.leadTime)+'</span>');
   document.getElementById("yslModalBadges").innerHTML=badges.join(' ');
-  // Build tabs
   var tabs = [
     {id:'overview', label:'Overview', icon:'📋'},
     {id:'dimensions', label:'Dimensions', icon:'📐'},
@@ -5642,7 +5640,6 @@ function openModal(p){
   ];
   var tabsHtml = tabs.map(t => '<button class="modal-tab-btn '+(t.id==='overview'?'active':'')+'" data-tab="'+t.id+'">'+t.icon+' '+t.label+'</button>').join('');
   document.getElementById('yslModalTabs').innerHTML = tabsHtml;
-  // Build panels
   var panelsHtml = tabs.map(t => '<div class="modal-tab-panel '+(t.id==='overview'?'active':'')+'" id="yslModalPanel-'+t.id+'">'+renderPanel(t.id, p)+'</div>').join('');
   document.getElementById('yslModalTabPanels').innerHTML = panelsHtml;
   ov.classList.add("active");
